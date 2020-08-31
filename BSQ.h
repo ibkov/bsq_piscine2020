@@ -19,6 +19,7 @@
 void    ft_init_map(char *argv);
 int     ft_check_info(char *argv);
 int     ft_check_lines(char *argv);
+int     ft_strlen(char *str);
 
 
 #endif
