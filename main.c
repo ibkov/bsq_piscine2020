@@ -11,35 +11,52 @@
 /* ************************************************************************** */
 
 #include "BSQ.h"
+#include <stdio.h>
 
 int		main(int argc, char **argv)
 {
 	int i;
 	int fd;
 	char a[1];
+	int count_sym_file = 0;
+	char **mass_maps;
+	char *temp_file;
+	int j = 0;
+	
 
-	i = 0;
-	fd = open(argv[1], O_RDONLY);
-   	while (read(fd, a, 1))
-		if (*a != '\n')
-		{
-			i++;
-			write(1, a, 1 );
-		}
-		else
-			break;
-	if (i == 4)
-		write(1, "OK", 2);
 	i = 1;
-	if (argc > 1)
+	mass_maps = malloc(sizeof(*mass_maps) * (argc - 1));
+	while (i < argc)
 	{
-		while(i < argc)
+		fd = open(argv[i], O_RDONLY);
+		while (read(fd, a, 1))
 		{
-		//	if (ft_check_map(argv[i]))
-			//	ft_init_map(argv[i]);
-			i++;
+			count_sym_file++;
 		}
+		temp_file = malloc(sizeof(*temp_file) * count_sym_file);
+		close(fd);
+		fd = open(argv[i], O_RDONLY);
+		while (read(fd, a, 1))
+		{
+			temp_file[j] = *a;
+			j++;
+		}
+		mass_maps[i - 1] = temp_file;
+		j = 0;
+		count_sym_file = 0;
+		i++;
 	}
-	else
-		return (0);
+	int k = 0;
+	while(mass_maps[0][k] != '\0')
+	{
+		if (mass_maps[0][k] == '\n')
+		{
+			mass_maps[0][k] = '0';
+		}
+		k++;	
+	}
+	
+
+	printf("%s", mass_maps[0]);
+	return (0);
 }

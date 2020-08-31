@@ -15,11 +15,13 @@
 
 # include <unistd.h>
 # include <fcntl.h>
+# include <stdlib.h>
 
 void    ft_init_map(char *argv);
 int     ft_check_info(char *argv);
 int     ft_check_lines(char *argv);
 int     ft_strlen(char *str);
+char *ft_first_row(char *str);
 
 
 #endif
